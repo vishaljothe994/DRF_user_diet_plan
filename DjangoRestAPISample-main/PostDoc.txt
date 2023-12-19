@@ -1,0 +1,256 @@
+End Point for : > create User <
+curl --location 'http://127.0.0.1:8000/createUser' \
+
+Request:
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "name",
+    "email": "email",
+    "password": "password"
+}'
+
+
+Response:
+{
+    "message": "user registered successfully",
+    "user": {
+        "fullName": "name",
+        "email": "email",
+        "password": "encrypted_password",
+        "isPaid": false,
+        "TrialsLeft": 20,
+        "createdAt": "createdAt",
+        "updatedAt": "updatedAt"
+    },
+    "id": "2"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > Login <
+curl --location 'http://127.0.0.1:8000/login' \
+
+Request:
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "email",
+    "password": "password"
+}'
+
+
+Response:
+{
+    "user": {
+        "id": 2,
+        "name": "name",
+        "email": "email",
+        "password": "encrypted_password",
+        "isPaid": false,
+        "TrialsLeft": 20,
+        "createdAt": "createdAt",
+        "updatedAt": "updatedAt"
+    },
+    "status": 200,
+    "message": "Success",
+    "access_token": "access_token"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > get User Detail by ID<
+
+Request:
+curl --location 'http://127.0.0.1:8000/getUserDetail/2' \
+
+--header 'Authorization: Bearer access_token' \
+--data ''
+
+
+Response:
+{
+    "id": 2,
+    "name": "name",
+    "email": "email",
+    "password": "encrypted_password",
+    "isPaid": false,
+    "TrialsLeft": 20,
+    "createdAt": "createdAt",
+    "updatedAt": "updatedAt"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > forgot_password<
+
+Request:
+curl --location 'http://127.0.0.1:8000/forgot_password' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "email"
+}'
+
+
+Response:
+{
+    "message": "Email has been sent"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > change_password<
+
+Request:
+curl --location 'http://127.0.0.1:8000/change_password' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "token": "token", #Got on your regestred email when you hit Forgot Password API
+    "newPassword":"newPassword",
+    "confirmPassword":"newPassword"
+}'
+
+Response:
+{
+    "message": "Password updated successfully"
+}
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > update User Detail by ID<
+
+Request:
+
+curl --location --request PUT 'http://127.0.0.1:8000/updateUserDetail/2/' \
+--header 'Authorization: Bearer access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "full_name": "name",
+    "email": "email"
+}'
+
+
+Response:
+{
+    "message": "User profile updated successfully",
+    "user": {
+        "full_name": "name",
+        "email": "email"
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : > create Generate Plan<
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/createGeneratePlan' \
+--header 'Authorization: Bearer access_token' \
+--header 'Content-Type: application/json' \
+--data '{
+  "userId": 2,
+  "noOfMembers": 2,
+  "national": "city name",
+  "meal": ["Lunch", "Dinner", "Breakfast"],
+  "diet": "Vegetarian",
+  "ethnicity": "South indian",
+  "createdAt": "createdAt",
+  "updatedAt": "updatedAt",
+  "members": [
+    {
+      "userId": 2,  
+      "name": "Member 1",
+      "allergy": "Paneer",
+      "medicalCondition": "Heart Disease"
+    },
+        {
+      "userId": 2,  
+      "name": "Member 2 ",
+      "allergy": "None",
+      "medicalCondition": "Heart Disease"
+    }
+  ]
+}'
+
+
+Response:
+{
+    "message": "Success",
+    "data": "[\n  {\n    \"weekDay\": \"Monday\",\n    \"Lunch\": \"Veg Biryani, Raita, Salad\",\n    \"Dinner\": \"Pav Bhaji, Dal Tadka, Curd\",\n    \"Breakfast\": \"Idli, Sambhar, Coconut Chutney\"\n  },\n  {\n    \"weekDay\": \"Tuesday\",\n    \"Lunch\": \"Jeera Rice, Cabbage Sabji, Curd\",\n    \"Dinner\": \"Masala Dosa, Sambhar, Coconut Chutney\",\n    \"Breakfast\": \"Upma, Coconut Chutney, Green Salad\"\n  },\n  {\n    \"weekDay\": \"Wednesday\",\n    \"Lunch\": \"Vegetable Pulao, Dal Fry, Raita\",\n    \"Dinner\": \"Veg Manchurian, Fried Rice, Curd\",\n    \"Breakfast\": \"Poha, Sambhar, Coconut Chutney\"\n  },\n  {\n    \"weekDay\": \"Thursday\",\n    \"Lunch\": \"Veg Biryani, Raita, Salad\",\n    \"Dinner\": \"Veg Hakka Noodles, Dal Tadka, Curd\",\n    \"Breakfast\": \"Idli, Sambhar, Coconut Chutney\"\n  },\n  {\n    \"weekDay\": \"Friday\",\n    \"Lunch\": \"Jeera Rice, Aloo Sabji, Curd\",\n    \"Dinner\": \"Masala Dosa, Sambhar, Coconut Chutney\",\n    \"Breakfast\": \"Upma, Coconut Chutney, Green Salad\"\n  },\n  {\n    \"weekDay\": \"Saturday\",\n    \"Lunch\": \"Kadhi Rice, Vegetable Korma, Raita\",\n    \"Dinner\": \"Veg Manchurian, Fried Rice, Curd\",\n    \"Breakfast\": \"Poha, Sambhar, Coconut Chutney\"\n  },\n  {\n    \"weekDay\": \"Sunday\",\n    \"Lunch\": \"Veg Biryani, Raita, Salad\",\n    \"Dinner\": \"Veg Hakka Noodles, Dal Tadka, Curd\",\n    \"Breakfast\": \"Idli, Sambhar, Coconut Chutney\"\n  }\n]",
+    "updateData": {
+        "id": 2,
+        "name": "vj11",
+        "email": "vishaljothe.synsoft@gmail.com",
+        "isPaid": false,
+        "TrialsLeft": 19,
+        "createdAt": "createdAt",
+        "updatedAt": "updatedAt"
+    }
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+End Point for : >Get Famliy Member Info<
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/getFamliyMemberInfo/2' \
+--header 'Authorization: Bearer access_token'
+
+
+Response:
+{
+    "userId": 2,
+    "noOfMembers": 2,
+    "national": "Indore",
+    "diet": "Vegetarian",
+    "ethnicity": "South indian",
+    "createdAt": "createdAt",
+    "updatedAt": "updatedAt",
+    "meal": [
+        "Lunch",
+        "Dinner",
+        "Breakfast"
+    ],
+    "members": [
+        {
+            "id": 3,
+            "name": "Member 1",
+            "allergy": "Paneer",
+            "medicalCondition": "Heart Disease",
+            "userId": 2,
+            "familyInfoId": 1
+        },
+        {
+            "id": 4,
+            "name": "Member 2",
+            "allergy": "None",
+            "medicalCondition": "Heart Disease",
+            "userId": 2,
+            "familyInfoId": 1
+        }
+    ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
